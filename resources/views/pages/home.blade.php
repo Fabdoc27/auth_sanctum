@@ -17,7 +17,7 @@
                     <li class="nav-item me-4"><a class="nav-link" href="#">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Testimonials</a></li>
                 </ul>
-                <div><a class="btn mt-3 bg-gradient-primary" href="{{ route('login.page') }}">Sign In</a></div>
+                <div><a class="btn mt-3 bg-gradient-primary" href="{{ route('login') }}">Sign In</a></div>
             </div>
         </div>
     </nav>

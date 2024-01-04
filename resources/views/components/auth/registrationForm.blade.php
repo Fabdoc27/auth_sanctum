@@ -54,8 +54,8 @@
         if (email.length === 0 || firstName.length === 0 || lastName.length === 0 || mobile.length === 0) {
             errorToast('All fields are required');
         } else if (password
-            .length < 6) {
-            errorToast('Password must be 6 charecter');
+            .length < 3) {
+            errorToast('Password must be 3 charecter');
         } else {
             showLoader();
             let res = await axios.post("/user-registration", {
@@ -67,10 +67,11 @@
             })
             hideLoader();
 
-            if (res.status === 201 && res.data['status'] === 'success') {
+            if (res.status === 200 && res.data['status'] === 'success') {
                 successToast(res.data['message']);
                 setTimeout(function() {
-                    window.location.href = '/userLogin'
+                    setToken(res.data['token'])
+                    window.location.href = '/dashboard'
                 }, 2000)
             } else {
                 console.log(res.data);

@@ -9,18 +9,17 @@ Route::post( '/user-registration', [UserController::class, 'userRegistration'] )
 Route::post( '/user-login', [UserController::class, 'userLogin'] );
 Route::post( '/send-otp', [UserController::class, 'sendOtp'] );
 Route::post( '/verify-otp', [UserController::class, 'verifyOtp'] );
-Route::post( '/reset-password', [UserController::class, 'passwordReset'] )->middleware( 'token' );
-Route::get( '/user-profile', [UserController::class, 'userProfile'] )->middleware( 'token' );
-Route::post( '/user-update', [UserController::class, 'updateProfile'] )->middleware( 'token' );
+Route::post( '/reset-password', [UserController::class, 'passwordReset'] )->middleware( 'auth:sanctum' );
+Route::get( '/user-profile', [UserController::class, 'userProfile'] )->middleware( 'auth:sanctum' );
+Route::post( '/user-update', [UserController::class, 'updateProfile'] )->middleware( 'auth:sanctum' );
 
 // Page Routes
-// Route::get('/',[HomeController::class,'HomePage']);
 Route::view( '/', 'pages.home' )->name( 'home.page' );
-Route::view( '/userLogin', 'pages.auth.login' )->name( 'login.page' );
+Route::view( '/userLogin', 'pages.auth.login' )->name( 'login' );
 Route::view( '/userRegistration', 'pages.auth.registration' )->name( 'registration.page' );
 Route::view( '/sendOtp', 'pages.auth.sendOtp' )->name( 'otp.page' );
 Route::view( '/verifyOtp', 'pages.auth.verifyOtp' );
-Route::view( '/resetPassword', 'pages.auth.resetPassword' )->middleware( 'token' );
-Route::view( '/userProfile', 'pages.dashboard.profile' )->name( 'profile.page' )->middleware( 'token' );
-Route::get( '/logout', [UserController::class, 'userLogout'] )->name( 'logout' );
-Route::get( '/dashboard', [DashboardController::class, 'index'] )->name( 'dashboard.page' )->middleware( 'token' );
+Route::view( '/resetPassword', 'pages.auth.resetPassword' )->middleware( 'auth:sanctum' );
+Route::view( '/userProfile', 'pages.dashboard.profile' )->name( 'profile.page' )->middleware( 'auth:sanctum' );
+Route::get( '/logout', [UserController::class, 'userLogout'] )->name( 'logout' )->middleware( 'auth:sanctum' );
+Route::get( '/dashboard', [DashboardController::class, 'index'] )->name( 'dashboard.page' );

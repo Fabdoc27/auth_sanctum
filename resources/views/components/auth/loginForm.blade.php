@@ -42,6 +42,7 @@
             if (res.status === 200 && res.data['status'] === 'success') {
                 successToast(res.data['message']);
                 setTimeout(function() {
+                    setToken(res.data['token'])
                     window.location.href = "/dashboard";
                 }, 2000);
             } else {
