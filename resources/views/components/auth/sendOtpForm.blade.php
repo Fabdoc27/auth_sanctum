@@ -17,26 +17,24 @@
 
 <script>
     async function verifyEmail() {
-        let email = document.getElementById('email').value;
+        let postBody = {
+            "email": document.getElementById('email').value,
+        }
 
-        if (email.length === 0) {
-            errorToast('Please enter your email address');
+        showLoader();
+        let res = await axios.post("/send-otp", postBody);
+        hideLoader();
+
+        if (res.status === 200 && res.data['status'] === 'success') {
+            successToast(res.data['message']);
+
+            setTimeout(function() {
+                sessionStorage.setItem("email", document.getElementById('email').value);
+                window.location.href = "/verifyOtp";
+            }, 2000);
+
         } else {
-            showLoader();
-            let res = await axios.post("/send-otp", {
-                email: email
-            });
-            hideLoader();
-
-            if (res.status === 200 && res.data['status'] === 'success') {
-                successToast(res.data['message']);
-                sessionStorage.setItem('email', email);
-                setTimeout(function() {
-                    window.location.href = '/verifyOtp'
-                }, 2000)
-            } else {
-                errorToast(res.data['message'])
-            }
+            errorToast(res.data['message']);
         }
     }
 </script>

@@ -182,8 +182,6 @@ class UserController extends Controller {
     }
 
     public function userProfile( Request $request ) {
-        // return Auth::user()['email'];
-        // return Auth::id();
         return Auth::user();
     }
 
@@ -193,7 +191,7 @@ class UserController extends Controller {
                 'firstName' => 'required|string|max:50',
                 'lastName'  => 'required|string|max:50',
                 'mobile'    => 'required|string|max:50',
-                'password'  => 'required|string|min:3',
+                'password'  => 'nullable|string|min:3',
             ] );
 
             User::where( 'id', '=', Auth::id() )->update( [

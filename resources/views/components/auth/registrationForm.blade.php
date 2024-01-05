@@ -44,39 +44,26 @@
 
 <script>
     async function onRegistration() {
+        let postBody = {
+            "email": document.getElementById('email').value,
+            "firstName": document.getElementById('firstName').value,
+            "lastName": document.getElementById('lastName').value,
+            "mobile": document.getElementById('mobile').value,
+            "password": document.getElementById('password').value,
+        }
 
-        let email = document.getElementById('email').value;
-        let firstName = document.getElementById('firstName').value;
-        let lastName = document.getElementById('lastName').value;
-        let mobile = document.getElementById('mobile').value;
-        let password = document.getElementById('password').value;
+        showLoader();
+        let res = await axios.post("/user-registration", postBody);
+        hideLoader();
 
-        if (email.length === 0 || firstName.length === 0 || lastName.length === 0 || mobile.length === 0) {
-            errorToast('All fields are required');
-        } else if (password
-            .length < 3) {
-            errorToast('Password must be 3 charecter');
+        if (res.status === 200 && res.data['status'] === 'success') {
+            successToast(res.data['message']);
+            setTimeout(function() {
+                setToken(res.data['token'])
+                window.location.href = "/dashboard";
+            }, 2000);
         } else {
-            showLoader();
-            let res = await axios.post("/user-registration", {
-                email: email,
-                firstName: firstName,
-                lastName: lastName,
-                mobile: mobile,
-                password: password
-            })
-            hideLoader();
-
-            if (res.status === 200 && res.data['status'] === 'success') {
-                successToast(res.data['message']);
-                setTimeout(function() {
-                    setToken(res.data['token'])
-                    window.location.href = '/dashboard'
-                }, 2000)
-            } else {
-                console.log(res.data);
-                errorToast(res.data['message']);
-            }
+            errorToast(res.data['message']);
         }
     }
 </script>

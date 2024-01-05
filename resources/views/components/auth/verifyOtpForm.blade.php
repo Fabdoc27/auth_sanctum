@@ -17,27 +17,25 @@
 
 <script>
     async function verifyOtp() {
-        let otp = document.getElementById('otp').value;
+        let postBody = {
+            "email": sessionStorage.getItem("email"),
+            "otp": document.getElementById('otp').value
+        }
 
-        if (otp.length !== 4) {
-            errorToast('Invalid Otp');
+        showLoader();
+        let res = await axios.post("/verify-otp", postBody);
+        hideLoader();
+
+        if (res.status === 200 && res.data['status'] === 'success') {
+            successToast(res.data['message']);
+
+            setTimeout(function() {
+                setToken(res.data['token'])
+                window.location.href = "/resetPassword";
+            }, 2000);
+
         } else {
-            showLoader();
-            let res = await axios.post("/verify-otp", {
-                otp: otp,
-                email: sessionStorage.getItem('email')
-            });
-            hideLoader();
-
-            if (res.status === 200 && res.data['status'] === 'success') {
-                successToast(res.data['message']);
-                sessionStorage.clear();
-                setTimeout(function() {
-                    window.location.href = '/resetPassword'
-                }, 2000)
-            } else {
-                errorToast(res.data['message'])
-            }
+            errorToast(res.data['message']);
         }
     }
 </script>

@@ -24,10 +24,10 @@
         let cpassword = document.getElementById('cpassword').value;
 
         if (password
-            .length < 6) {
+            .length < 3) {
             errorToast('Password must be 6 charecter')
         } else if (cpassword
-            .length < 6) {
+            .length < 3) {
             errorToast('Confirm password must be 6 charecter');
         } else if (password !== cpassword) {
             errorToast('Password & confirm password must be same');
@@ -35,16 +35,18 @@
             showLoader();
             let res = await axios.post("/reset-password", {
                 password: password
-            });
+            }, headerToken());
             hideLoader();
 
             if (res.status === 200 && res.data['status'] === 'success') {
                 successToast(res.data['message']);
+
                 setTimeout(function() {
-                    window.location.href = '/userLogin'
-                }, 2000)
+                    window.location.href = "/dashboard";
+                }, 2000);
+
             } else {
-                errorToast(res.data['message'])
+                errorToast(res.data['message']);
             }
         }
     }

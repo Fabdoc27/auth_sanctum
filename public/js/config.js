@@ -29,27 +29,27 @@ function errorToast(msg) {
     }).showToast();
 }
 
-function unauthorized(code){
+function unauthorized(code) {
     if (code === 401) {
         localStorage.clear();
         sessionStorage.clear();
-        window.location.href="/logout";
+        window.location.href = "/logout"
     }
 }
 
-function setToken(token){
-    localStorage.setItem("token",`Bearer ${token}`)
+function setToken(token) {
+    localStorage.setItem("token", `Bearer ${token}`)
 }
 
-function getToken(){
+function getToken() {
     return localStorage.getItem("token")
 }
 
-function headerToken(){
-    let token=getToken();
-    return  {
+function headerToken() {
+    let token = getToken();
+    return {
         headers: {
-            Authorization:token
+            Authorization: token
         }
     }
 }

@@ -50,19 +50,16 @@
 
 <script>
     getProfile();
-
     async function getProfile() {
 
         try {
             showLoader();
             let res = await axios.get("/user-profile", headerToken());
             hideLoader();
-
             document.getElementById('email').value = res.data['email'];
-            document.getElementById('firstName').value = res.data['firstName'];
-            document.getElementById('lastName').value = res.data['lastName'];
-            document.getElementById('mobile').value = res.data['mobile'];
-            document.getElementById('password').value = res.data['password'];
+            document.getElementById('firstName').value = res.data['firstName']
+            document.getElementById('lastName').value = res.data['lastName']
+            document.getElementById('mobile').value = res.data['mobile']
 
         } catch (e) {
             unauthorized(e.response.status)
@@ -85,7 +82,7 @@
             successToast(res.data['message'])
             await getProfile();
         } else {
-            successToast(res.data['message'])
+            errorToast(res.data['message'])
         }
     }
 </script>
