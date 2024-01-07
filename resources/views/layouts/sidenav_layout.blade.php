@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>X-Bakery</title>
 
+    <script>
+        if (localStorage.getItem('token') === null) {
+            window.location.href = "/userLogin";
+        }
+    </script>
+
     <link rel="icon" type="image/x-icon" href="{{ asset('/favicon.ico') }}" />
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet" />
@@ -52,12 +58,15 @@
                             <h6>User Name</h6>
                             <hr class="user-dropdown-divider  p-0" />
                         </div>
+
                         <a href="{{ route('profile.page') }}" class="side-bar-item">
                             <span class="side-bar-item-caption">Profile</span>
                         </a>
-                        <a href="{{ route('logout') }}" class="side-bar-item">
+
+                        <a href="#" onclick="logout()" class="side-bar-item">
                             <span class="side-bar-item-caption">Logout</span>
                         </a>
+
                     </div>
                 </div>
             </div>
@@ -110,6 +119,22 @@
 
 
     <script>
+        async function logout() {
+            try {
+                showLoader();
+                let res = await axios.get("/logout", headerToken());
+                hideLoader();
+
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = "/userLogin";
+
+            } catch (e) {
+                errorToast(res.data['message']);
+                unauthorized(e.response.status)
+            }
+        }
+
         function MenuBarClickHandler() {
             let sideNav = document.getElementById('sideNavRef');
             let content = document.getElementById('contentRef');
