@@ -24,10 +24,10 @@
         let cpassword = document.getElementById('cpassword').value;
 
         if (password
-            .length < 3) {
+            .length < 6) {
             errorToast('Password must be 6 charecter')
         } else if (cpassword
-            .length < 3) {
+            .length < 6) {
             errorToast('Confirm password must be 6 charecter');
         } else if (password !== cpassword) {
             errorToast('Password & confirm password must be same');

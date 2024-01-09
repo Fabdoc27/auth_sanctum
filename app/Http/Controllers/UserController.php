@@ -18,7 +18,7 @@ class UserController extends Controller {
                 'lastName'  => 'required|string|max:50',
                 'email'     => 'required|string|email|unique:users,email|max:50',
                 'mobile'    => 'required|string|max:50',
-                'password'  => 'required|string|min:3',
+                'password'  => 'required|string|min:6',
             ] );
 
             User::create( [
@@ -52,7 +52,7 @@ class UserController extends Controller {
         try {
             $request->validate( [
                 'email'    => 'required|string|email|max:50',
-                'password' => 'required|string|min:3',
+                'password' => 'required|string|min:6',
             ] );
 
             $user = User::where( 'email', '=', $request->input( 'email' ) )->first();
@@ -161,7 +161,7 @@ class UserController extends Controller {
     public function passwordReset( Request $request ) {
         try {
             $request->validate( [
-                'password' => 'required|string|min:3',
+                'password' => 'required|string|min:6',
             ] );
 
             $id       = Auth::id();
@@ -191,7 +191,7 @@ class UserController extends Controller {
                 'firstName' => 'required|string|max:50',
                 'lastName'  => 'required|string|max:50',
                 'mobile'    => 'required|string|max:50',
-                'password'  => 'nullable|string|min:3',
+                'password'  => 'nullable|string|min:6',
             ] );
 
             User::where( 'id', '=', Auth::id() )->update( [

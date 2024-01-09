@@ -52,18 +52,25 @@
             "password": document.getElementById('password').value,
         }
 
-        showLoader();
-        let res = await axios.post("/user-registration", postBody);
-        hideLoader();
-
-        if (res.status === 200 && res.data['status'] === 'success') {
-            successToast(res.data['message']);
-            setTimeout(function() {
-                setToken(res.data['token'])
-                window.location.href = "/dashboard";
-            }, 2000);
+        if (email.length === 0 || firstName.length === 0 || lastName.length === 0 || mobile.length === 0) {
+            errorToast('All fields are required');
+        } else if (password
+            .length < 6) {
+            errorToast('Password must be 6 charecter');
         } else {
-            errorToast(res.data['message']);
+            showLoader();
+            let res = await axios.post("/user-registration", postBody);
+            hideLoader();
+
+            if (res.status === 200 && res.data['status'] === 'success') {
+                successToast(res.data['message']);
+                setTimeout(function() {
+                    setToken(res.data['token'])
+                    window.location.href = "/dashboard";
+                }, 2000);
+            } else {
+                errorToast(res.data['message']);
+            }
         }
     }
 </script>
