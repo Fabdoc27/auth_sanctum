@@ -44,7 +44,7 @@
                 setTimeout(function() {
                     setToken(res.data['token'])
                     window.location.href = "/dashboard";
-                }, 2000);
+                }, 1500);
             } else {
                 errorToast("Login Credentials are Invalid");
             }

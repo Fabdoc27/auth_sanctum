@@ -103,20 +103,14 @@ class UserController extends Controller {
                 User::where( 'email', '=', $email )->update( ['otp' => $otp] );
 
                 return response()->json( [
-                    "status"  => "success",
-                    "message" => "4 digits otp code has been send to your email.",
-                ] );
-            } else {
-                return response()->json( [
-                    "status"  => "failed",
-                    "message" => "Invalid Email",
+                    'status'  => 'success',
+                    'message' => '4 digits otp code has been send to your email',
                 ] );
             }
-
         } catch ( Exception $e ) {
             return response()->json( [
-                "status"  => "failed",
-                "message" => $e->getMessage(),
+                'status'  => 'failed',
+                'message' => $e->getMessage(),
             ] );
         }
     }
@@ -208,7 +202,7 @@ class UserController extends Controller {
 
         } catch ( Exception $e ) {
             return response()->json( [
-                'status'  => 'fail',
+                'status'  => 'failed',
                 'message' => $e->getMessage(),
             ] );
         }

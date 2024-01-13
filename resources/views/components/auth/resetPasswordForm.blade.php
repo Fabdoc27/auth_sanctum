@@ -43,7 +43,7 @@
 
                 setTimeout(function() {
                     window.location.href = "/dashboard";
-                }, 2000);
+                }, 1500);
 
             } else {
                 errorToast(res.data['message']);

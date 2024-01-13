@@ -32,7 +32,7 @@
             setTimeout(function() {
                 setToken(res.data['token'])
                 window.location.href = "/resetPassword";
-            }, 2000);
+            }, 1500);
 
         } else {
             errorToast(res.data['message']);
